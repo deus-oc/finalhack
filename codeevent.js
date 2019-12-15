@@ -1,23 +1,32 @@
-const onclick = async (id_no) => {
-    console.log(`id is equal to ${id_no}`);
-    const response = await fetch(`https://clist.by/api/v1/contest/?username=amu629&api_key=cfdcf7a003520eb7deadb0d84875aa5c87ce75c2&resource__id=${id_no}&start__gt=2019-12-15T03:07:43&order__by=start&limit=10&utf-8&application/json`);
-    const responseJson = await response.json();
-    console.log(responseJson);
-    const modalbody = document.querySelector(`#modal-body-${id_no}`);
-    console.log(modalbody);
-
-}
 const rowclick = document.querySelector('.row');
 const id = [1,2,12,35,63,73];
 const idname = ['Codeforces', 'Codechef', 'Topcoder', 'Google-code-comp', 'Hackerrank', 'Hackerearth'];
 
-const whenClickButton = (e) => {
+
+const onclick = async (id_no) => {
+    console.log(`id is equal to ${id_no}`);
+    const response = await fetch(`https://clist.by/api/v1/contest/?username=amu629&api_key=cfdcf7a003520eb7deadb0d84875aa5c87ce75c2&resource__id=${id_no}&start__gt=2019-12-15T03:07:43&order__by=start&limit=10&utf-8&application/json`);
+    const responseJson = await response.json();
+    console.log(responseJson); 
+    const modalbody = document.querySelector(`.modal-body-${id_no}`);
+    console.log(modalbody);
+    // const img = document.createElement('div')
+    // img = <div class="card" style="width: 18rem;">
+    //   <img class="card-img-top" src="..." alt="Card image cap">
+    // </div> 
+    // modalbody
+    // const lists = document.createElement('ul');
+
+
+}
+
+const whenClickButton = async (e) => {
     console.log(e.target.id);
-    let btn = document.querySelector('#' + e.target.id);
     let numbers = e.target.id.split('-');
-    console.log(numbers[1]); 
+    console.log(numbers[1]);
+    const btn = document.querySelector(`#${e.target.id}`);
     console.log(btn);
-    btn.addEventListener('click', () => onclick(numbers[1]));
+    onclick(numbers[1]);
 }
 
 const fetchallsamplecard = () => {
@@ -34,9 +43,9 @@ const fetchallsamplecard = () => {
                 Get all the upcoming events/rounds on Codeforces .
               </p>
             <!-- Button trigger modal -->
-              <button id = "btn-${value}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-              Launch demo modal
-              </button>
+            <!-- Button = api call-->
+              <button id = "btn-${value}" type="button" class="btn btn-primary">Launch demo modal</button>
+              <button style = "display : none" id = "btn-real-${value}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Launch demo modal</button>
             <!-- Modal -->
             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -65,7 +74,4 @@ const fetchallsamplecard = () => {
       rowclick.appendChild(cards);
     })
 }
-
-
-
-rowclick.addEventListener('click', whenClickButton)
+rowclick.addEventListener('click', whenClickButton);
