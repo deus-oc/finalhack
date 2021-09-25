@@ -2,17 +2,15 @@ const rowclick = document.querySelector('.row');
 const id = [1,2,12,35,63,73];
 const idcount = [0,0,0,0,0,0];
 const idname = ['Codeforces', 'Codechef', 'Topcoder', 'Google-code-comp', 'Hackerrank', 'Hackerearth'];
-const logo = ['https://cdn.aelieve.com/toptere/Codeforces.jpg', 'https://www.improgrammer.net/wp-content/uploads/2016/01/Codechef-logo.png', 'https://www.theindianwire.com/wp-content/uploads/2018/06/Topcoder-logo.jpg', 'https://cdn-images-1.medium.com/max/1600/1*FHJTiIW9_enNj4RWSQ3NEQ.png', 'http://www.iamwire.com/wp-content/uploads/2014/06/hackerrank_g7yq8.png', 'https://verticalplatform.kr/wp-content/uploads/2014/03/hackerearth-logo.png']
+const logo = ['https://cdn.aelieve.com/toptere/Codeforces.jpg', 'https://cdn.codechef.com/sites/all/themes/abessive/cc-logo-sd.svg', 'https://www.theindianwire.com/wp-content/uploads/2018/06/Topcoder-logo.jpg', 'https://cdn-images-1.medium.com/max/1600/1*FHJTiIW9_enNj4RWSQ3NEQ.png', 'https://cdn-images-1.medium.com/max/2600/1*UGT1Rh9xLww3JeIDR1F0RQ.png', 'https://verticalplatform.kr/wp-content/uploads/2014/03/hackerearth-logo.png']
 
 const onclick = async (index_no) => {
-    console.log(`id is equal to ${id[index_no]}`);
-
-    const response = await fetch(`https://clist.by/api/v1/contest/?username=amu629&api_key=cfdcf7a003520eb7deadb0d84875aa5c87ce75c2&resource__id=${id[index_no]}&start__gt=2019-12-15T03:07:43&order__by=start&limit=10&utf-8&application/json`);
+    // * used cors-anywhere proxy to remove cors error
+    // * API used here is of clist.by
+    const response = await fetch(`https://cors-anywhere.herokuapp.com/clist.by/api/v1/contest/?username=amu629&api_key=cfdcf7a003520eb7deadb0d84875aa5c87ce75c2&resource__id=${id[index_no]}&start__gt=2019-12-15T03:07:43&order__by=start&limit=10&utf-8&application/json`);
     const responseJson = await response.json();
-    console.log(responseJson.objects); 
     if(idcount[index_no] === 0){
       const modaltitle = document.querySelector(`#modal-title-${index_no}`);
-      console.log(modaltitle);
       const img = document.createElement('div');
       img.style.width = '18rem';
       img.innerHTML = `<img class="card-img-top mx-auto" src="${logo[index_no]}" alt="Card image cap">`;
@@ -31,13 +29,12 @@ const onclick = async (index_no) => {
 }
 
 const whenClickButton = async (e) => {
-    console.log(e.target.id);
     let numbers = e.target.id.split('-');
-    console.log(numbers[1]);
-    const btn = document.querySelector(`#${e.target.id}`);
-    console.log(btn);
-    if(numbers[0] !== 'real'){
-      onclick(numbers[1]);
+    if(numbers[0] == 'btn' || numbers[0] == 'real'){
+      const btn = document.querySelector(`#${e.target.id}`);
+      if(numbers[0] !== 'real'){
+        onclick(numbers[1]);
+      }  
     }
 }
 
